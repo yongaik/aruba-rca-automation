@@ -1,0 +1,196 @@
+{
+  "source": "aruba_central",
+  "collected_at": "2026-06-16T08:00:00+00:00",
+  "lookback_minutes": 30,
+  "ap_health": {
+    "total": 18,
+    "up": 15,
+    "down": 2,
+    "restarting": 1,
+    "down_aps": [
+      {
+        "name": "AP-LobbyA-01",
+        "serial": "CNXXXXXXXXX1",
+        "ip": "10.10.1.21",
+        "site": "HQ-Floor1",
+        "last_modified": "2026-06-16T07:20:00+00:00"
+      },
+      {
+        "name": "AP-ConfRoom3-02",
+        "serial": "CNXXXXXXXXX2",
+        "ip": "10.10.1.34",
+        "site": "HQ-Floor1",
+        "last_modified": "2026-06-16T07:17:00+00:00"
+      }
+    ],
+    "high_noise_aps": [
+      {
+        "name": "AP-OpenPlan-05",
+        "band": "2_4ghz",
+        "noise_dbm": -78
+      },
+      {
+        "name": "AP-OpenPlan-06",
+        "band": "2_4ghz",
+        "noise_dbm": -80
+      }
+    ]
+  },
+  "rf_metrics": [
+    {
+      "ap_name": "AP-OpenPlan-05",
+      "serial": "CNXXXXXXXXX5",
+      "band": "5ghz",
+      "channel": 36,
+      "channel_utilization_pct": 74,
+      "client_count": 31,
+      "tx_power_dbm": 17,
+      "noise_dbm": -85
+    },
+    {
+      "ap_name": "AP-OpenPlan-06",
+      "serial": "CNXXXXXXXXX6",
+      "band": "5ghz",
+      "channel": 36,
+      "channel_utilization_pct": 71,
+      "client_count": 28,
+      "tx_power_dbm": 17,
+      "noise_dbm": -84
+    },
+    {
+      "ap_name": "AP-OpenPlan-05",
+      "serial": "CNXXXXXXXXX5",
+      "band": "2_4ghz",
+      "channel": 6,
+      "channel_utilization_pct": 88,
+      "client_count": 14,
+      "tx_power_dbm": 14,
+      "noise_dbm": -78
+    },
+    {
+      "ap_name": "AP-Reception-03",
+      "serial": "CNXXXXXXXXX3",
+      "band": "5ghz",
+      "channel": 44,
+      "channel_utilization_pct": 42,
+      "client_count": 12,
+      "tx_power_dbm": 15,
+      "noise_dbm": -89
+    },
+    {
+      "ap_name": "AP-Reception-04",
+      "serial": "CNXXXXXXXXX4",
+      "band": "5ghz",
+      "channel": 44,
+      "channel_utilization_pct": 38,
+      "client_count": 9,
+      "tx_power_dbm": 15,
+      "noise_dbm": -90
+    }
+  ],
+  "client_health": {
+    "total_clients": 87,
+    "poor_snr_clients": [
+      {
+        "mac": "aa:bb:cc:dd:ee:01",
+        "ssid": "CorpWiFi",
+        "ap": "AP-OpenPlan-05",
+        "snr_db": 11,
+        "channel": 36
+      },
+      {
+        "mac": "aa:bb:cc:dd:ee:02",
+        "ssid": "CorpWiFi",
+        "ap": "AP-OpenPlan-06",
+        "snr_db": 14,
+        "channel": 36
+      },
+      {
+        "mac": "aa:bb:cc:dd:ee:03",
+        "ssid": "CorpWiFi",
+        "ap": "AP-OpenPlan-05",
+        "snr_db": 9,
+        "channel": 6
+      },
+      {
+        "mac": "aa:bb:cc:dd:ee:04",
+        "ssid": "CorpWiFi",
+        "ap": "AP-OpenPlan-06",
+        "snr_db": 16,
+        "channel": 36
+      }
+    ],
+    "by_ssid": {
+      "CorpWiFi": {
+        "count": 72,
+        "poor_snr": 4
+      },
+      "GuestWiFi": {
+        "count": 15,
+        "poor_snr": 0
+      }
+    }
+  },
+  "network_events": [
+    {
+      "timestamp": "2026-06-16T07:20:05+00:00",
+      "type": "AP_DOWN",
+      "description": "AP AP-LobbyA-01 is down",
+      "device": "AP-LobbyA-01",
+      "site": "HQ-Floor1"
+    },
+    {
+      "timestamp": "2026-06-16T07:17:30+00:00",
+      "type": "AP_DOWN",
+      "description": "AP AP-ConfRoom3-02 is down",
+      "device": "AP-ConfRoom3-02",
+      "site": "HQ-Floor1"
+    },
+    {
+      "timestamp": "2026-06-16T07:35:00+00:00",
+      "type": "RADIUS_FAILURE",
+      "description": "RADIUS authentication failure for client aa:bb:cc:dd:ee:05 on SSID CorpWiFi",
+      "device": "AP-OpenPlan-05",
+      "site": "HQ-Floor1"
+    },
+    {
+      "timestamp": "2026-06-16T07:38:00+00:00",
+      "type": "RADIUS_FAILURE",
+      "description": "RADIUS authentication failure for client aa:bb:cc:dd:ee:06 on SSID CorpWiFi",
+      "device": "AP-OpenPlan-06",
+      "site": "HQ-Floor1"
+    },
+    {
+      "timestamp": "2026-06-16T07:50:00+00:00",
+      "type": "AP_RESTARTING",
+      "description": "AP AP-Reception-03 is restarting",
+      "device": "AP-Reception-03",
+      "site": "HQ-Floor1"
+    },
+    {
+      "timestamp": "2026-06-16T07:30:00+00:00",
+      "type": "CLIENT_DEAUTH",
+      "description": "Multiple client deauthentications on SSID CorpWiFi",
+      "device": "AP-OpenPlan-05",
+      "site": "HQ-Floor1"
+    }
+  ],
+  "alerts": [
+    {
+      "id": "alert-001",
+      "severity": "critical",
+      "type": "AP_DOWN",
+      "description": "2 APs are down on HQ-Floor1",
+      "created_at": "2026-06-16T07:20:00+00:00",
+      "state": "active"
+    },
+    {
+      "id": "alert-002",
+      "severity": "high",
+      "type": "AUTH_FAILURE_RATE",
+      "description": "Elevated RADIUS authentication failure rate on CorpWiFi",
+      "created_at": "2026-06-16T07:35:00+00:00",
+      "state": "active"
+    }
+  ]
+}

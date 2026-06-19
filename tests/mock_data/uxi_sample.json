@@ -1,0 +1,56 @@
+{
+  "source": "uxi",
+  "collected_at": "2026-06-16T08:00:00+00:00",
+  "lookback_minutes": 30,
+  "api_note": "UXI REST API provides configuration and inventory only. Test result telemetry arrives via webhook push.",
+  "sensor_inventory": {
+    "total": 6,
+    "by_group": {"HQ-Floor1": 6},
+    "by_model": {"UX-G6E": 4, "UX-AP": 2},
+    "sensors": [
+      {"id": "sensor-001", "name": "UXI-Sensor-LobbyA",   "serial": "SN001", "model": "UX-G6E", "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:01"},
+      {"id": "sensor-002", "name": "UXI-Sensor-OpenPlan", "serial": "SN002", "model": "UX-G6E", "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:02"},
+      {"id": "sensor-003", "name": "UXI-Sensor-Reception","serial": "SN003", "model": "UX-G6E", "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:03"},
+      {"id": "sensor-004", "name": "UXI-Sensor-ConfRoom3","serial": "SN004", "model": "UX-G6E", "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:04"},
+      {"id": "sensor-005", "name": "UXI-Sensor-Cafeteria","serial": "SN005", "model": "UX-AP",  "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:05"},
+      {"id": "sensor-006", "name": "UXI-Sensor-ITRoom",   "serial": "SN006", "model": "UX-AP",  "group": "HQ-Floor1", "group_path": "/HQ/Floor1", "wifi_mac": "aa:bb:cc:00:00:06"}
+    ]
+  },
+  "service_tests": {
+    "total_tests": 8,
+    "note": "Test result telemetry is not available via UXI REST API. Configure UXI webhooks to receive real-time alert events.",
+    "by_type": {
+      "networking-uxi/service-test": {
+        "total": 8,
+        "enabled": 8,
+        "tests": [
+          {"id": "t-001", "name": "DHCP Test - CorpWiFi",             "target": null,                        "enabled": true},
+          {"id": "t-002", "name": "DNS Test - CorpWiFi",              "target": "internal.corp.local",       "enabled": true},
+          {"id": "t-003", "name": "HTTP Test - Intranet",             "target": "http://intranet.corp.local","enabled": true},
+          {"id": "t-004", "name": "Wireless Connectivity - CorpWiFi", "target": null,                        "enabled": true},
+          {"id": "t-005", "name": "Ping Test - Default Gateway",      "target": "10.10.1.1",                 "enabled": true},
+          {"id": "t-006", "name": "DHCP Test - GuestWiFi",            "target": null,                        "enabled": true},
+          {"id": "t-007", "name": "DNS Test - GuestWiFi",             "target": "8.8.8.8",                   "enabled": true},
+          {"id": "t-008", "name": "HTTP Test - Internet",             "target": "https://www.google.com",    "enabled": true}
+        ]
+      }
+    }
+  },
+  "wireless_networks": [
+    {"id": "ssid-001", "name": "CorpWiFi",  "ssid": "CorpWiFi",  "security": "wpa2-enterprise", "band_locking": "auto", "external_connectivity": true,  "dns_lookup_domain": "corp.local"},
+    {"id": "ssid-002", "name": "GuestWiFi", "ssid": "GuestWiFi", "security": "wpa2-personal",   "band_locking": "auto", "external_connectivity": true,  "dns_lookup_domain": null}
+  ],
+  "webhook_alerts": {
+    "note": "Simulated UXI webhook alert data received during lookback window",
+    "alerts": [
+      {"sensor_id": "sensor-002", "ssid": "CorpWiFi", "test": "wireless_connectivity", "timestamp": "2026-06-16T07:45:00+00:00", "error": "Association timeout after 802.1X EAP exchange"},
+      {"sensor_id": "sensor-003", "ssid": "CorpWiFi", "test": "wireless_connectivity", "timestamp": "2026-06-16T07:42:30+00:00", "error": "RADIUS Access-Reject received"},
+      {"sensor_id": "sensor-005", "ssid": "CorpWiFi", "test": "wireless_connectivity", "timestamp": "2026-06-16T07:39:10+00:00", "error": "EAP timeout — no response from RADIUS server"},
+      {"sensor_id": "sensor-006", "ssid": "CorpWiFi", "test": "wireless_connectivity", "timestamp": "2026-06-16T07:33:00+00:00", "error": "RADIUS Access-Reject received"},
+      {"sensor_id": "sensor-002", "ssid": "CorpWiFi", "test": "dhcp",                  "timestamp": "2026-06-16T07:44:00+00:00", "error": "DHCP offer timeout"},
+      {"sensor_id": "sensor-003", "ssid": "CorpWiFi", "test": "dhcp",                  "timestamp": "2026-06-16T07:40:00+00:00", "error": "DHCP offer timeout"},
+      {"sensor_id": "sensor-003", "ssid": "CorpWiFi", "test": "dns",                   "timestamp": "2026-06-16T07:41:00+00:00", "error": "DNS resolution timeout for internal.corp.local"},
+      {"sensor_id": "sensor-002", "ssid": "CorpWiFi", "test": "http",                  "timestamp": "2026-06-16T07:43:00+00:00", "error": "HTTP request failed — no IP assigned"}
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+# config.yaml — non-secret runtime configuration
+
+rca:
+  # Lookback window for data collection (minutes)
+  lookback_minutes: 30
+  # Claude model to use for analysis
+  model: claude-sonnet-4-6
+  # Maximum tokens for RCA response
+  max_tokens: 8192
+
+thresholds:
+  # UXI test failure rate that triggers an alert (%)
+  uxi_failure_rate_pct: 20
+  # Minimum acceptable SNR for wireless clients (dBm)
+  min_snr_db: 20
+  # Maximum acceptable application latency (ms)
+  max_app_latency_ms: 200
+  # Maximum RADIUS auth failure rate (%)
+  max_auth_failure_rate_pct: 10
+  # DHCP failure threshold (%)
+  max_dhcp_failure_pct: 5
+  # Minimum AP uptime before flagging (%)
+  min_ap_uptime_pct: 95
+
+collector:
+  # API request timeout (seconds)
+  timeout_sec: 15
+  # Number of retries on transient failures
+  retries: 3
+  # Backoff factor between retries (seconds)
+  retry_backoff_sec: 2
+
+output:
+  # Output directory for reports
+  report_dir: ./output
+  # Keep reports for N days before auto-cleanup
+  retain_days: 30
+
+scheduler:
+  # Cron expression for scheduled runs
+  # Default: every 10 minutes
+  cron: "*/10 * * * *"
+
+webhook:
+  # Shared secret for validating incoming webhook payloads
+  # Set the same value in your UXI/Central alert webhook config
+  secret: "change_me_to_a_random_string"
+
+severity_labels:
+  critical: "🔴 CRITICAL"
+  high: "🟠 HIGH"
+  medium: "🟡 MEDIUM"
+  low: "🟢 LOW"
+  info: "ℹ️ INFO"

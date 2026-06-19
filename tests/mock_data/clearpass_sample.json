@@ -1,0 +1,147 @@
+{
+  "source": "clearpass",
+  "collected_at": "2026-06-16T08:00:00+00:00",
+  "lookback_minutes": 30,
+  "active_sessions": {
+    "total_active": 58,
+    "by_auth_type": {
+      "802.1X": 51,
+      "MAB": 7
+    },
+    "sample_sessions": [
+      {
+        "id": "sess-001",
+        "username": "jdoe@corp.local",
+        "mac_address": "aa:bb:cc:dd:ee:10",
+        "ssid": "CorpWiFi",
+        "nas_ip_address": "10.10.1.1",
+        "accrue_type": "802.1X",
+        "state": "active",
+        "start_time": "2026-06-16T07:00:00+00:00"
+      },
+      {
+        "id": "sess-002",
+        "username": "asmith@corp.local",
+        "mac_address": "aa:bb:cc:dd:ee:11",
+        "ssid": "CorpWiFi",
+        "nas_ip_address": "10.10.1.1",
+        "accrue_type": "802.1X",
+        "state": "active",
+        "start_time": "2026-06-16T06:55:00+00:00"
+      }
+    ]
+  },
+  "auth_logs": {
+    "total_events": 143,
+    "accepted": 101,
+    "rejected": 42,
+    "failure_rate_pct": 29.4,
+    "alert": true,
+    "top_failure_reasons": {
+      "EAP-TLS: Client certificate validation failed — certificate expired": 18,
+      "EAP-TLS: Unknown CA — client certificate issued by untrusted CA": 11,
+      "RADIUS: NAS-IP-Address not in allowed NAS list": 7,
+      "802.1X: EAP timeout — no response from supplicant": 4,
+      "Policy: Role assignment failed — no matching service rule": 2
+    },
+    "failed_details": [
+      {
+        "timestamp": "2026-06-16T07:55:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:20",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Client certificate validation failed — certificate expired",
+        "user": "bwilson@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:53:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:21",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Client certificate validation failed — certificate expired",
+        "user": "mjones@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:51:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:22",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Unknown CA — client certificate issued by untrusted CA",
+        "user": "tlee@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:48:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:23",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.21",
+        "reason": "RADIUS: NAS-IP-Address not in allowed NAS list",
+        "user": "pkim@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:45:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:24",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.34",
+        "reason": "RADIUS: NAS-IP-Address not in allowed NAS list",
+        "user": "cwang@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:43:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:25",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Client certificate validation failed — certificate expired",
+        "user": "dchen@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:40:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:26",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Unknown CA — client certificate issued by untrusted CA",
+        "user": "rnguyen@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:37:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:27",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Client certificate validation failed — certificate expired",
+        "user": "sgarcia@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:35:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:28",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "Policy: Role assignment failed — no matching service rule",
+        "user": "hpatel@corp.local"
+      },
+      {
+        "timestamp": "2026-06-16T07:32:00+00:00",
+        "mac": "aa:bb:cc:dd:ee:29",
+        "ssid": "CorpWiFi",
+        "nas_ip": "10.10.1.1",
+        "reason": "EAP-TLS: Client certificate validation failed — certificate expired",
+        "user": "fliu@corp.local"
+      }
+    ]
+  },
+  "endpoint_compliance": {
+    "unknown_endpoints": 14,
+    "sample": [
+      {
+        "mac_address": "aa:bb:cc:dd:ee:30",
+        "status": "Unknown",
+        "device_type": "Unknown",
+        "last_seen": "2026-06-16T07:50:00+00:00"
+      },
+      {
+        "mac_address": "aa:bb:cc:dd:ee:31",
+        "status": "Unknown",
+        "device_type": "Unknown",
+        "last_seen": "2026-06-16T07:48:00+00:00"
+      }
+    ]
+  }
+}
