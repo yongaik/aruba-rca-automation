@@ -9,6 +9,7 @@ via webhook. This collector returns sensor inventory, configured tests,
 and wireless network definitions for RCA context.
 """
 import os
+import time
 import logging
 from datetime import datetime, timezone
 from typing import Optional
@@ -25,12 +26,18 @@ class UXICollector:
 
     BASE_URL = os.getenv("UXI_BASE_URL", "https://api.capenetworks.com")
     API_VERSION = "networking-uxi/v1alpha1"
+    DEFAULT_TOKEN_URL = "https://sso.common.cloud.hpe.com/as/token.oauth2"
 
     def __init__(self, lookback_minutes: int = 30):
-        self.token = os.getenv("UXI_API_TOKEN")
-        if not self.token:
-            raise EnvironmentError("UXI_API_TOKEN is not set in environment.")
+        self.client_id = os.getenv("UXI_CLIENT_ID")
+        self.client_secret = os.getenv("UXI_CLIENT_SECRET")
+        self.token_url = os.getenv("UXI_TOKEN_URL", self.DEFAULT_TOKEN_URL)
+        for var, val in [("UXI_CLIENT_ID", self.client_id), ("UXI_CLIENT_SECRET", self.client_secret)]:
+            if not val:
+                raise EnvironmentError(f"{var} is not set in environment.")
         self.lookback_minutes = lookback_minutes
+        self._access_token: Optional[str] = None
+        self._token_expiry: float = 0
         self.session = self._build_session()
 
     def _build_session(self) -> requests.Session:
@@ -40,20 +47,33 @@ class UXICollector:
             backoff_factor=float(os.getenv("COLLECTOR_BACKOFF", 2)),
             status_forcelist=[429, 500, 502, 503, 504],
         )
-        adapter = HTTPAdapter(max_retries=retry)
-        session.mount("https://", adapter)
-        session.headers.update({
-            "Authorization": f"Bearer {self.token}",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-        })
+        session.mount("https://", HTTPAdapter(max_retries=retry))
+        session.headers.update({"Content-Type": "application/json", "Accept": "application/json"})
         return session
 
+    def _get_token(self) -> str:
+        """OAuth2 client-credentials token, cached and auto-refreshed."""
+        if self._access_token and time.time() < self._token_expiry - 60:
+            return self._access_token
+        resp = self.session.post(
+            self.token_url,
+            data={"grant_type": "client_credentials", "client_id": self.client_id, "client_secret": self.client_secret},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        self._access_token = data["access_token"]
+        self._token_expiry = time.time() + data.get("expires_in", 7200)
+        logger.info(f"UXI: token acquired (expires_in={data.get('expires_in')}s).")
+        return self._access_token
+
     def _get(self, endpoint: str, params: Optional[dict] = None) -> dict:
+        token = self._get_token()
         url = f"{self.BASE_URL}/{self.API_VERSION}/{endpoint}"
         try:
             resp = self.session.get(
                 url, params=params,
+                headers={"Authorization": f"Bearer {token}"},
                 timeout=int(os.getenv("COLLECTOR_TIMEOUT", 15))
             )
             resp.raise_for_status()
@@ -74,9 +94,13 @@ class UXICollector:
             items.extend(data.get("items", []))
             if not data.get("next"):
                 break
-            # next is a URL — extract cursor/offset if needed; simplest is re-GET the next URL
+            # next is a full URL — re-GET with fresh auth header
             next_url = data["next"]
-            resp = self.session.get(next_url, timeout=int(os.getenv("COLLECTOR_TIMEOUT", 15)))
+            resp = self.session.get(
+                next_url,
+                headers={"Authorization": f"Bearer {self._get_token()}"},
+                timeout=int(os.getenv("COLLECTOR_TIMEOUT", 15)),
+            )
             resp.raise_for_status()
             data = resp.json()
             items.extend(data.get("items", []))
