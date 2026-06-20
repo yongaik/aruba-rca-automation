@@ -48,7 +48,6 @@ class UXICollector:
             status_forcelist=[429, 500, 502, 503, 504],
         )
         session.mount("https://", HTTPAdapter(max_retries=retry))
-        session.headers.update({"Content-Type": "application/json", "Accept": "application/json"})
         return session
 
     def _get_token(self) -> str:
@@ -73,7 +72,7 @@ class UXICollector:
         try:
             resp = self.session.get(
                 url, params=params,
-                headers={"Authorization": f"Bearer {token}"},
+                headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
                 timeout=int(os.getenv("COLLECTOR_TIMEOUT", 15))
             )
             resp.raise_for_status()
